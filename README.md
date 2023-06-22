@@ -18,7 +18,10 @@ This project uses Node to create a professional and detailed README.md file for 
 ## Installation
 Clone the repository to your computer
 In the directory where you have the project saved, make sure you have the required dependencies installed. Depending on your current setup, you might need to:
-
+  
   Install Node.js
+  
   Initialize npm
+  
   Install the inquirer package from npm
+  
