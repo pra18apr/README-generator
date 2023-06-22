@@ -6,10 +6,14 @@ This project uses Node to create a professional and detailed README.md file for 
 
 ## Tools Used
 
-  ####JavaScript ES6
+  JavaScript ES6
+  
   Node.js
+  
   npm inquirer
+  
   shields.io for the license badges
+  
 
 ## Installation
 Clone the repository to your computer
