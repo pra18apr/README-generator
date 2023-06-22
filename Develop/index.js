@@ -1,71 +1,165 @@
-const inquirer = require('inquirer');
 const fs = require('fs');
+const inquirer = require('inquirer');
 const generateMarkdown = require('./utils/generateMarkdown');
 
 // array of questions for user
-const promptUser = () => {
-    return inquirer.prompt([
-      {
+const questions = [
+    {
         type: 'input',
         name: 'title',
-        message: 'What is the title of your project?',
-      },
-      {
+        message: 'What is your project title?',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter your project name!');
+                return false;
+            }
+        }
+    },
+    {
         type: 'input',
         name: 'description',
-        message: 'Enter a description of your project.'
-      },
-      {
-        type: 'confirm',
-        name: 'table',
-        message: 'Would you like to include a table of contents?',
-        default: true
-      },
-      {
+        message: 'Describe your project in a few sentences.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter your project description!');
+                return false;
+            }
+        }
+    },
+    {
         type: 'input',
         name: 'installation',
-        message: 'Enter installation information.'
-      },
-      {
+        message: 'Describe the installation instructions for your application.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter installation instructions for your application!');
+                return false;
+            }
+        }
+    },
+    {
         type: 'input',
         name: 'usage',
-        message: 'Enter usage information.'
-      },
-      {
+        message: 'Describe how a user will use your application.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter usage instructions for your application!');
+                return false;
+            }
+        }
+    },
+    {
+        type: 'confirm',
+        name: 'licenseConfirm',
+        message: 'Does your project repository already have a license assigned?',
+    }, {
+        when: function (response) {
+            if (response.licenseConfirm === false) {return true;}
+            else {return false}
+        },
         type: 'list',
-        name: 'licenses',
-        message: 'Which license is your project covered under?',
-        choices: ['Apache', 'Eclipse', 'GNU', 'IBM', 'MIT', 'Mozilla'],
-      },
-      {
+        name: 'license',
+        message: 'What license are you using with your project?  (Select one)',
+        choices: ['MIT', 'GNU GPLv3', 'Apache 2.0', 'other']        
+    },
+    {
         type: 'input',
-        name: 'contribution',
-        message: 'Enter information on how someone can contribute to your project.'
-      },
-      {
+        name: 'contributing',
+        message: 'Describe how another developer can contribute to the project.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter instructions for contributing to your project!');
+                return false;
+            }
+        }
+    },
+    {
         type: 'input',
         name: 'tests',
-        message: 'Enter any tests that are relevant to your project.'
-      },
-      {
+        message: 'Provide test instructions for your application.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter test instructions!');
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'github',
+        message: 'Provide your GitHub username.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter your GitHub username!');
+                return false;
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'githubRepo',
+        message: 'Provide the GitHub repository name for your project.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter your GitHub repository name!');
+                return false;
+            }
+        }
+    },
+    {
         type: 'input',
         name: 'email',
-        message: 'Enter your email address.'
-      },
-      {
-        type: 'input',
-        name: 'username',
-        message: 'Enter your github username.'
-      }
-    ]);
-  };
-    promptUser()
-      .then(portfolioData => {
+        message: 'Provide an email for users to contact you with questions.',
+        validate: input => {
+            if (input) {
+                return true;
+            } else {
+                console.log('Please enter your contact email!');
+                return false;
+            }
+        }
+    }
+];
 
-        const readMeInfo = generateMarkdown(portfolioData);
-        fs.writeFile('./readMe.md', readMeInfo, err => {
-           if (err) throw new Error(err);
-    
-           console.log('Page created! Check out readMe.md in this directory to see it!');
-         });
-      });
+// function to write README file
+function writeToFile(fileName, data) {
+    fs.writeFile(fileName, generateMarkdown(data), err => {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            console.log('README.md file created!')
+        }
+    })
+};
+
+// function to initialize program
+function init() {
+    return inquirer
+        .prompt(questions)
+        .then(readmeData => {
+            return writeToFile('./dist/README.md',readmeData)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+};
+
+// function call to initialize program
+init();
