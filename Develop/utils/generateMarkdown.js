@@ -1,48 +1,42 @@
+const licenseBadge = (licenseConfirm, license, github, githubRepo) => {
+  if(licenseConfirm) {
+    const licenseLink = 'https://img.shields.io/github/license/' + github + '/' + githubRepo
+    return `![GitHub](${ licenseLink })`
+  } else {
+    license = encodeURI(license);
+    return `![license badge](https://img.shields.io/badge/license-${ license }-brightgreen)`
+  }
+}
+
 // function to generate markdown for README
-module.exports = templateData => {
-  const {title, description, table, installation, usage, licenses, contribution, tests, email, username} = templateData;
+function generateMarkdown(data) {
   return `
-  # ${title}
-
-  ![License: ${licenses}](https://img.shields.io/badge/License-${licenses}-brightgreen.svg)
-
+  # ${ data.title }
+  
+  ${ licenseBadge(data.licenseConfirm, data.license, data.github, data.githubRepo) }
   ## Description
-
-  ${description}
-
+  ${ data.description }
   ## Table of Contents
-
   * [Installation](#installation)
   * [Usage](#usage)
   * [License](#license)
   * [Contributing](#contributing)
   * [Tests](#tests)
   * [Questions](#questions)
-
   ## Installation
-
-  ${installation}
-
+  ${ data.installation }
   ## Usage
-
-  ${usage}
-
+  ${ data.usage }
   ## License
-
-  ${licenses}
-
+  This project uses ${ licenseBadge(data.licenseConfirm, data.license, data.github, data.githubRepo) }. You can get more information on licenses [here](https://choosealicense.com/).
   ## Contributing
-  
-  ${contribution}
-
+  ${ data.contributing}
   ## Tests
-
-  ${tests}
-
+  ${ data.tests }
   ## Questions
-
-  Contact: ${email}
-  Github Username: https://github.com/${username}
+  * [My GitHub Profile](https://github.com/${ data.github })
+  * Email me at: [${ data.email }](mailto:${ data.email }) with questions about this project
 `;
+};
 
-}
+module.exports = generateMarkdown;
