@@ -28,4 +28,5 @@ In the directory where you have the project saved, make sure you have the requir
   Initialize npm
   
   Install the inquirer package from npm
-  
+
+  Link of the walkthrough video: https://drive.google.com/file/d/15_Qg1nU9E9Oz0Wd_MT8iIetji-hpM0AZ/view?usp=sharing
