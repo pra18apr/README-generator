@@ -92,7 +92,7 @@ SOFTWARE.
   ## Questions
 <br />
 
-  
+   <img src="https://avatars.githubusercontent.com/u/130611291?v=4" width="200" height="200"/>
     
   <br/>Email Pradeep Kumar with any support questions at <a href="mailto:pra.18apr@gmail.com">pra.18apr@gmail.com</a><br>
   or visit my <a href="https://github.com/pra18apr">GitHub Homepage</a>.
